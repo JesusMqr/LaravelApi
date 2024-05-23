@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ADMIN\TeamsController;
 use App\Http\Controllers\api\Admin\UsersController;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
@@ -22,9 +23,11 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
 Route::group(['middleware'=>['auth:sanctum']],function(){
     //users
     Route::get('/users',[UsersController::class,'index']);
+    Route::get('/user-role/{id}',[UsersController::class,'getRole']);
+    //teams
+    Route::get('/teams',[TeamsController::class,'index']);
+    Route::post('/teams-create',[TeamsController::class,'create']);
+    Route::put('/teams-update',[TeamsController::class,'update']);
+    Route::delete('/teams-delete',[TeamsController::class,'delete']);
 });
 
-
-Route::get('/user', function (Request $request) {
-   return $request->user();
-})->middleware('auth:sanctum');

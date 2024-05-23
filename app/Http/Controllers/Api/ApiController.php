@@ -14,7 +14,7 @@ class ApiController extends Controller
 {
     public function register(Request $request){
         try{
-            $validateUser= validator::make($request->all(),
+            $validateUser= Validator::make($request->all(),
             [
                 'name'=>'required',
                 'email'=>'required|email|unique:users,email',
