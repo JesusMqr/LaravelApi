@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\ADMIN;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
@@ -123,4 +124,110 @@ class TeamsController extends Controller
         }
     }
     
+    public function addUser(Request $request){
+        try{
+            $validateAdd= Validator::make($request->all(),
+            [
+                'team_id'=>'required',
+                'user_id'=>'required',
+            ]);
+            if($validateAdd->fails()){
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'validation failed',
+                    'errors'=>$validateAdd->errors(),
+                ],401);
+            }
+
+            $team = Team::find($request->team_id);
+            $user = User::find($request->user_id);
+
+            if(!$user || !$team){
+                return response()->json([
+                    'status' => false,
+                   'message' => 'El usuario o el equipo que intenta agregar no existen',
+                ], 401);
+            }
+            $team->users()->attach($user);
+            return response()->json([
+                'status' => true,
+               'message' => 'El usuario ha sido agregado al equipo',
+            ], 200);
+        }catch(Throwable $th){
+            return response()->json([
+                'status'=>false,
+               'message'=>'Something went wrong',
+               'error'=> $th->getMessage(),
+            ],401);
+        }
+    }
+
+    public function showUsers(Request $request){
+        try{
+            $validateShowUsers = Validator::make($request->all(),[
+                "team_id"=>"required"
+            ]);
+            if($validateShowUsers->fails()){
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'validation failed',
+                    'errors'=>$validateShowUsers->errors(),
+                ],401);
+            }
+
+            $team = Team::find($request->team_id);
+            $users = $team->users;
+
+            return response()->json([
+                'status' => true,
+               'message' => 'Lista de usuarios del equipo',
+                'data'=>$users,
+            ], 200);
+        }catch(Throwable $th){
+            return response()->json([
+                'status'=>false,
+               'message'=>'Something went wrong',
+            ],401);
+        }
+    }
+
+    public function removeUser(Request $request){
+        try{
+            $validateRemove= Validator::make($request->all(),
+            [
+                'team_id'=>'required',
+                'user_id'=>'required',
+            ]);
+
+            if($validateRemove->fails()){
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'validation failed',
+                    'errors'=>$validateRemove->errors(),
+                ],401);
+            }
+
+            $team = Team::find($request->team_id);
+            $user = User::find($request->user_id);
+
+            if(!$user || !$team){
+                return response()->json([
+                    'status' => false,
+                   'message' => 'El usuario o el equipo que intenta remover no existen',
+                ], 401);
+            }
+            $team->users()->detach($user);
+            return response()->json([
+                'status' => true,
+               'message' => 'El usuario ha sido removido al equipo',
+            ], 200);
+        }catch(Throwable $th){
+            return response()->json([
+                'status'=>false,
+               'message'=>'Something went wrong',
+               'error'=> $th->getMessage(),
+            ],401);
+        }
+    }
+
 }

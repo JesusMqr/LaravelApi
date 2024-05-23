@@ -21,6 +21,16 @@ class LaratrustSetupTeams extends Migration
             $table->timestamps();
         });
 
+        Schema::create('team_user',function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('team_id');
+            $table->unsignedBigInteger('user_id');
+            $table->timestamps();
+
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
         Schema::table('role_user', function (Blueprint $table) {
             // Drop role foreign key and primary key
             $table->dropForeign(['role_id']);
@@ -71,6 +81,8 @@ class LaratrustSetupTeams extends Migration
         Schema::table('permission_user', function (Blueprint $table) {
             $table->dropForeign(['team_id']);
         });
+
+        Schema::dropIfExists('team_user');
 
         Schema::dropIfExists('teams');
     }

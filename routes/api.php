@@ -29,5 +29,9 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::post('/teams-create',[TeamsController::class,'create']);
     Route::put('/teams-update',[TeamsController::class,'update']);
     Route::delete('/teams-delete',[TeamsController::class,'delete']);
+    //teams-user
+    Route::post('/teams-addUser',[TeamsController::class,'addUser']);
+    Route::get('/teams-showUsers',[TeamsController::class,'showUsers']);
+    Route::post('/teams-removeUser',[TeamsController::class,'removeUser']);
 });
 
