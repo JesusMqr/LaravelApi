@@ -37,6 +37,7 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::get('/teams-showPosts',[TeamsController::class,'showPosts']);
     //posts
     Route::get('/posts',[PostController::class,'index']);
+    Route::get('/post-show',[PostController::class,'show']);
     Route::post('/post-create',[PostController::class,'create']);
     Route::post('/post-update',[PostController::class,'update']);
     Route::delete('/post-delete',[PostController::class,'delete']);

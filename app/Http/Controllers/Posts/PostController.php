@@ -129,4 +129,39 @@ class PostController extends Controller
             ],401);
         }
     }
+
+    public function show(Request $request){
+        try{
+            $validatePost = Validator::make($request->all(),[
+                "id"=>"required"
+            ]);
+
+
+            if($validatePost->fails()){
+                return response()->json([
+                    'status'=>false,
+                   'message'=>'validation failed',
+                ]);
+            }
+
+            $post = Post::find($request->id);
+
+            if(!$post){
+                return response()->json([
+                   'status'=>false,
+                   'message'=>'Post not found',
+                ]);
+            }
+            return response()->json([
+               'status'=>'success',
+               'message'=>'Post show successfully',
+                'data'=>$post,
+            ],200);
+        }catch(Throwable $th){
+            return response()->json([
+                'status'=>false,
+               'message'=>'Something went wrong',
+            ]);
+        }
+    }
 }
