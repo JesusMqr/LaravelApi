@@ -162,35 +162,6 @@ class TeamsController extends Controller
         }
     }
 
-    public function showUsers(Request $request){
-        try{
-            $validateShowUsers = Validator::make($request->all(),[
-                "team_id"=>"required"
-            ]);
-            if($validateShowUsers->fails()){
-                return response()->json([
-                    'status'=>false,
-                    'message'=>'validation failed',
-                    'errors'=>$validateShowUsers->errors(),
-                ],401);
-            }
-
-            $team = Team::find($request->team_id);
-            $users = $team->users;
-
-            return response()->json([
-                'status' => true,
-               'message' => 'Lista de usuarios del equipo',
-                'data'=>$users,
-            ], 200);
-        }catch(Throwable $th){
-            return response()->json([
-                'status'=>false,
-               'message'=>'Something went wrong',
-            ],401);
-        }
-    }
-
     public function removeUser(Request $request){
         try{
             $validateRemove= Validator::make($request->all(),
@@ -226,6 +197,63 @@ class TeamsController extends Controller
                 'status'=>false,
                'message'=>'Something went wrong',
                'error'=> $th->getMessage(),
+            ],401);
+        }
+    }
+
+    public function showUsers(Request $request){
+        try{
+            $validateShowUsers = Validator::make($request->all(),[
+                "team_id"=>"required"
+            ]);
+            if($validateShowUsers->fails()){
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'validation failed',
+                    'errors'=>$validateShowUsers->errors(),
+                ],401);
+            }
+
+            $team = Team::find($request->team_id);
+            $users = $team->users;
+
+            return response()->json([
+                'status' => true,
+               'message' => 'Lista de usuarios del equipo',
+                'data'=>$users,
+            ], 200);
+        }catch(Throwable $th){
+            return response()->json([
+                'status'=>false,
+               'message'=>'Something went wrong',
+            ],401);
+        }
+    }
+    public function showPosts(Request $request){
+        try{
+            $validateShowUsers = Validator::make($request->all(),[
+                "team_id"=>"required"
+            ]);
+            if($validateShowUsers->fails()){
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'validation failed',
+                    'errors'=>$validateShowUsers->errors(),
+                ],401);
+            }
+
+            $team = Team::find($request->team_id);
+            $posts = $team->posts;
+
+            return response()->json([
+                'status' => true,
+               'message' => 'Lista de posts del equipo',
+                'data'=>$posts,
+            ], 200);
+        }catch(Throwable $th){
+            return response()->json([
+                'status'=>false,
+               'message'=>'Something went wrong',
             ],401);
         }
     }

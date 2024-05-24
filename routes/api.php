@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\ADMIN\TeamsController;
 use App\Http\Controllers\api\Admin\UsersController;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Posts\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,5 +34,11 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::post('/teams-addUser',[TeamsController::class,'addUser']);
     Route::get('/teams-showUsers',[TeamsController::class,'showUsers']);
     Route::post('/teams-removeUser',[TeamsController::class,'removeUser']);
+    Route::get('/teams-showPosts',[TeamsController::class,'showPosts']);
+    //posts
+    Route::get('/posts',[PostController::class,'index']);
+    Route::post('/post-create',[PostController::class,'create']);
+    Route::post('/post-update',[PostController::class,'update']);
+    Route::delete('/post-delete',[PostController::class,'delete']);
 });
 

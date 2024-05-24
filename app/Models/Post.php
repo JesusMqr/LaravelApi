@@ -11,10 +11,18 @@ class Post extends Model
 
     protected $fillable=[
         'title',
+        'team_id',
         'image_url',
+        'description',
         'author',
-        'last_updated',
-        'group_id',
     ];
+
+    public function team(){
+        return $this->belongsTo(Team::class);
+    }
+
+    public function chapters(){
+        return $this->hasMany(Chapter::class);
+    }
 
 }
