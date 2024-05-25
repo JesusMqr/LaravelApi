@@ -229,7 +229,7 @@ class TeamsController extends Controller
             ],401);
         }
     }
-    public function showPosts(Request $request){
+    public function getPosts(Request $request){
         try{
             $validateShowUsers = Validator::make($request->all(),[
                 "team_id"=>"required"

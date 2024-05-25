@@ -34,12 +34,13 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::post('/teams-addUser',[TeamsController::class,'addUser']);
     Route::get('/teams-showUsers',[TeamsController::class,'showUsers']);
     Route::post('/teams-removeUser',[TeamsController::class,'removeUser']);
-    Route::get('/teams-showPosts',[TeamsController::class,'showPosts']);
+    Route::get('/teams-showPosts',[TeamsController::class,'getPosts']);
     //posts
     Route::get('/posts',[PostController::class,'index']);
     Route::get('/post-show',[PostController::class,'show']);
     Route::post('/post-create',[PostController::class,'create']);
     Route::post('/post-update',[PostController::class,'update']);
     Route::delete('/post-delete',[PostController::class,'delete']);
+    Route::get('/post-getChapters',[PostController::class,'getChapters']);
 });
 

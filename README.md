@@ -1,66 +1,154 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel 11 API Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introducción
 
-## About Laravel
+Este proyecto es una API construida con Laravel 11. Proporciona funcionalidades de autenticación, gestión de usuarios, equipos, publicaciones, capítulos y imagenes.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos Previos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP >= 8.0
+- Composer
+- MySQL o cualquier otro gestor de bases de datos compatible
+- Node.js y npm (opcional, para compilación de assets frontend)
+- Git (opcional, para clonación del repositorio)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Instalación
 
-## Learning Laravel
+### Clonar el Repositorio
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+git clone https://github.com/JesusMqr/LaravelApi.git
+cd tu-repositorio
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# API Documentation
 
-## Laravel Sponsors
+## Autenticación
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Registro
+- **Ruta**: `/register`
+- **Método**: `POST`
+- **Controlador**: `ApiController@register`
+- **Descripción**: Registra un nuevo usuario.
 
-### Premium Partners
+### Login
+- **Ruta**: `/login`
+- **Método**: `POST`
+- **Controlador**: `ApiController@login`
+- **Descripción**: Autentica un usuario y devuelve un token.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Rutas Protegidas (Requieren Autenticación)
 
-## Contributing
+### Perfil
+- **Ruta**: `/profile`
+- **Método**: `GET`
+- **Controlador**: `ApiController@profile`
+- **Descripción**: Obtiene la información del perfil del usuario autenticado.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Logout
+- **Ruta**: `/logout`
+- **Método**: `GET`
+- **Controlador**: `ApiController@logout`
+- **Descripción**: Cierra la sesión del usuario autenticado.
 
-## Code of Conduct
+## Usuarios
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Listar Usuarios
+- **Ruta**: `/users`
+- **Método**: `GET`
+- **Controlador**: `UsersController@index`
+- **Descripción**: Lista todos los usuarios.
 
-## Security Vulnerabilities
+### Obtener Rol de Usuario
+- **Ruta**: `/user-role/{id}`
+- **Método**: `GET`
+- **Controlador**: `UsersController@getRole`
+- **Descripción**: Obtiene el rol del usuario especificado por su ID.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Equipos (Teams)
 
-## License
+### Listar Equipos
+- **Ruta**: `/teams`
+- **Método**: `GET`
+- **Controlador**: `TeamsController@index`
+- **Descripción**: Lista todos los equipos.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Crear Equipo
+- **Ruta**: `/teams-create`
+- **Método**: `POST`
+- **Controlador**: `TeamsController@create`
+- **Descripción**: Crea un nuevo equipo.
+
+### Actualizar Equipo
+- **Ruta**: `/teams-update`
+- **Método**: `PUT`
+- **Controlador**: `TeamsController@update`
+- **Descripción**: Actualiza un equipo existente.
+
+### Eliminar Equipo
+- **Ruta**: `/teams-delete`
+- **Método**: `DELETE`
+- **Controlador**: `TeamsController@delete`
+- **Descripción**: Elimina un equipo existente.
+
+### Añadir Usuario a Equipo
+- **Ruta**: `/teams-addUser`
+- **Método**: `POST`
+- **Controlador**: `TeamsController@addUser`
+- **Descripción**: Añade un usuario a un equipo.
+
+### Mostrar Usuarios de un Equipo
+- **Ruta**: `/teams-showUsers`
+- **Método**: `GET`
+- **Controlador**: `TeamsController@showUsers`
+- **Descripción**: Muestra los usuarios de un equipo.
+
+### Eliminar Usuario de un Equipo
+- **Ruta**: `/teams-removeUser`
+- **Método**: `POST`
+- **Controlador**: `TeamsController@removeUser`
+- **Descripción**: Elimina un usuario de un equipo.
+
+### Mostrar Posts de un Equipo
+- **Ruta**: `/teams-showPosts`
+- **Método**: `GET`
+- **Controlador**: `TeamsController@getPosts`
+- **Descripción**: Muestra los posts de un equipo.
+
+## Posts
+
+### Listar Posts
+- **Ruta**: `/posts`
+- **Método**: `GET`
+- **Controlador**: `PostController@index`
+- **Descripción**: Lista todos los posts.
+
+### Mostrar Post
+- **Ruta**: `/post-show`
+- **Método**: `GET`
+- **Controlador**: `PostController@show`
+- **Descripción**: Muestra un post específico.
+
+### Crear Post
+- **Ruta**: `/post-create`
+- **Método**: `POST`
+- **Controlador**: `PostController@create`
+- **Descripción**: Crea un nuevo post.
+
+### Actualizar Post
+- **Ruta**: `/post-update`
+- **Método**: `POST`
+- **Controlador**: `PostController@update`
+- **Descripción**: Actualiza un post existente.
+
+### Eliminar Post
+- **Ruta**: `/post-delete`
+- **Método**: `DELETE`
+- **Controlador**: `PostController@delete`
+- **Descripción**: Elimina un post existente.
+
+### Obtener Capítulos de un Post
+- **Ruta**: `/post-getChapters`
+- **Método**: `GET`
+- **Controlador**: `PostController@getChapters`
+- **Descripción**: Obtiene los capítulos de un post.

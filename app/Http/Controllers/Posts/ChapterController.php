@@ -3,50 +3,45 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+use App\Models\Chapter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
-class PostController extends Controller
+class ChapterController extends Controller
 {
-
     public function index(){
-        $posts = Post::all();
+        $chapters = Chapter::all();
         return response()->json([
            'status' => true,
-           'message' => 'Lista de posts',
-            'data'=>$posts,
+           'message' => 'Lista de chapters',
+            'data'=>$chapters,
         ]);
     }
 
     public function create(Request $request){
         try{
-            $validatePost= Validator::make($request->all(),[
-                'title' =>'required|unique:posts,title',
-                'team_id' =>'required',
-                'image_url' =>'required',
+            $validateChapter= Validator::make($request->all(),[
+                'title' =>'required|unique:chapters,title',
+                'post_id' =>'required',
             ]);
 
-            if($validatePost->fails()){
+            if($validateChapter->fails()){
                 return response()->json([
                    'status'=>false,
                    'message'=>'validation failed',
-                    'errors'=>$validatePost->errors(),
+                    'errors'=>$validateChapter->errors(),
                 ],401);
             }
 
-            $post = Post::create([
+            $chapter = Chapter::create([
                 'title' => $request->title,
-                'team_id' => $request->team_id,
-                'image_url' => $request->image_url,
-                'description' => $request->description,
-                'author' => $request->author,
+                'post_id' => $request->post_id,
             ]);
 
             return response()->json([
                'status'=>'success',
-               'message'=>'Post created successfully',
+               'message'=>'Chapter created successfully',
             ],200);
 
         }catch(Throwable $th){
@@ -59,36 +54,32 @@ class PostController extends Controller
 
     public function update(Request $request){
         try{
-            $validatePost= Validator::make($request->all(),[
+            $validateChapter= Validator::make($request->all(),[
                 'id'=>'required',
-                'title' =>'required|unique:posts,title',
-                'team_id' =>'required',
-                'image_url' =>'required',
+                'title' =>'required|unique:chapters,title',
+                'post_id' =>'required',
             ]);
 
-            if($validatePost->fails()){
+            if($validateChapter->fails()){
                 return response()->json([
                    'status'=>false,
                    'message'=>'validation failed',
-                    'errors'=>$validatePost->errors(),
+                    'errors'=>$validateChapter->errors(),
                 ],401);
             }
 
-            $post = Post::find($request->id);
+            $chapter = Chapter::find($request->id);
             
-            $post->update([
+            $chapter->update([
                 'title' => $request->title,
-                'team_id' => $request->team_id,
-                'image_url' => $request->image_url,
-                'description' => $request->description,
-                'author' => $request->author,
+                'post_id' => $request->post_id,
             ]);
 
-            $post->save();
+            $chapter->save();
 
             return response()->json([
                'status'=>'success',
-               'message'=>'Post update successfully',
+               'message'=>'Chapter update successfully',
             ],200);
 
         }catch(Throwable $th){
@@ -113,13 +104,13 @@ class PostController extends Controller
                 ]);
             }
 
-            $post = Post::find($request->id);
+            $chapter = Chapter::find($request->id);
 
-            $post->delete();
+            $chapter->delete();
 
             return response()->json([
                'status'=>'success',
-               'message'=>'Post deleted successfully',
+               'message'=>'Chapter deleted successfully',
             ],200);
 
         }catch(Throwable $th){
@@ -132,30 +123,30 @@ class PostController extends Controller
 
     public function show(Request $request){
         try{
-            $validatePost = Validator::make($request->all(),[
+            $validateChapter = Validator::make($request->all(),[
                 "id"=>"required"
             ]);
 
 
-            if($validatePost->fails()){
+            if($validateChapter->fails()){
                 return response()->json([
                     'status'=>false,
                    'message'=>'validation failed',
                 ]);
             }
 
-            $post = Post::find($request->id);
+            $chapter = Chapter::find($request->id);
 
-            if(!$post){
+            if(!$chapter){
                 return response()->json([
                    'status'=>false,
-                   'message'=>'Post not found',
+                   'message'=>'Chapter not found',
                 ]);
             }
             return response()->json([
                'status'=>'success',
-               'message'=>'Post show successfully',
-                'data'=>$post,
+               'message'=>'Chapter show successfully',
+                'data'=>$chapter,
             ],200);
         }catch(Throwable $th){
             return response()->json([
@@ -165,33 +156,33 @@ class PostController extends Controller
         }
     }
 
-    public function getChapters(Request $request){
+    public function getPictures(Request $request){
         try{
-            $validatePost = Validator::make($request->all(),[
+            $validateChapter = Validator::make($request->all(),[
                 "id"=>'required'
             ]);
 
-            if($validatePost->fails()) {
+            if($validateChapter->fails()) {
                 return response()->json([
                     'status'=>false,
                    'message'=>'validation failed',
                 ]);
             }
 
-            $post = Post::find($request->id);
+            $chapter = Chapter::find($request->id);
 
-            $chapters= $post->chapters;
+            $pictures= $chapter->pictures;
 
-            if(0 >= $chapters->count()){
+            if(0 >= $pictures->count()){
                 return response()->json([
                    'status'=>false,
-                   'message'=>'chapters not found',
+                   'message'=>'pictures not found',
                 ]);
             }
             return response()->json([
                 'status'=>'success',
-               'message'=>'Post show successfully',
-               'data'=>$chapters,
+               'message'=>'pictures show successfully',
+               'data'=>$pictures,
             ]);
 
         }catch(Throwable $th){
