@@ -9,7 +9,6 @@ Este proyecto es una API construida con Laravel 11. Proporciona funcionalidades 
 - PHP >= 8.0
 - Composer
 - MySQL o cualquier otro gestor de bases de datos compatible
-- Node.js y npm (opcional, para compilación de assets frontend)
 - Git (opcional, para clonación del repositorio)
 
 ## Instalación
